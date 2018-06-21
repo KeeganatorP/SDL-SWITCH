@@ -33,7 +33,7 @@ CFLAGS		:=	-g -Wall -O2 -ffast-math $(ARCH)
 CFLAGS		+=	$(INCLUDES) -DARM11 -DSWITCH -D__SWITCH__ -DLOAD_BMP \
 				-DLOAD_GIF -DLOAD_LBM -DLOAD_PCX -DLOAD_PNM -DLOAD_TGA -DLOAD_XCF \
 				-DLOAD_XPM -DLOAD_XV -DLOAD_JPG -DLOAD_PNG \
-				-I$(LIBNX)/../portlibs/armv8-a/include -I$(LIBNX)/../portlibs/switch/include/SDL
+				-I$(LIBNX)/../portlibs/switch/include -I$(LIBNX)/../portlibs/switch/include/SDL
 CXXFLAGS	:=  $(CFLAGS) -fno-rtti -std=gnu++11
 ASFLAGS		:=	-g $(ARCH)
 LDFLAGS		:=	-specs=switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)

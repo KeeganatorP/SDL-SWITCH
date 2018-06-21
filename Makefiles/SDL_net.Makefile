@@ -4,13 +4,12 @@ endif
 
 include $(DEVKITA64)/base_tools
 
-TARGET_LIB = libSDL_gfx.a
+TARGET_LIB = libSDL_net.a
 
-OBJS =	SDL_gfxPrimitives.o \
-		SDL_rotozoom.o \
-		SDL_framerate.o \
-		SDL_imageFilter.o \
-		SDL_gfxBlitFunc.o
+OBJS =	SDLnet.o \
+		SDLnetTCP.o \
+		SDLnetUDP.o \
+		SDLnetselect.o
 
 
 LIBNX	:= $(DEVKITPRO)/libnx

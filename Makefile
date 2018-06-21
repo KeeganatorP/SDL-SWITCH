@@ -36,9 +36,10 @@ SDL_NET_DOWNLOAD  := "http://www.libsdl.org/projects/SDL_net/release/SDL_net-1.2
         $(SDL_TTF) \
         $(SDL_MIXER) \
         $(SDL_IMAGE) \
-        $(SDL_GFX) 
+        $(SDL_GFX) \
+        $(SDL_NET) 
 		
-all: SDL SDL_ttf SDL_mixer SDL_image SDL_gfx install
+all: SDL SDL_ttf SDL_mixer SDL_image SDL_gfx SDL_net install
 	@echo "Finished!"
 
 old_all:
@@ -48,6 +49,7 @@ old_all:
 	@echo "  $(SDL_MIXER)"
 	@echo "  $(SDL_IMAGE)"
 	@echo "  $(SDL_GFX)"
+	@echo "  $(SDL_NET)"
 
 DOWNLOAD = wget --no-check-certificate -O "$(1)" "$(2)" || curl -Lo "$(1)" "$(2)"
 
@@ -62,6 +64,9 @@ $(SDL_MIXER_SRC):
 
 $(SDL_GFX_SRC):
 	$(call DOWNLOAD,$@,$(SDL_GFX_DOWNLOAD))
+	
+$(SDL_NET_SRC):
+	$(call DOWNLOAD,$@,$(SDL_NET_DOWNLOAD))
 
 $(SDL):
 	@cd $(SDL_VERSION) 
@@ -90,6 +95,12 @@ $(SDL_GFX): $(SDL_GFX_SRC)
 	@cd $(SDL_GFX_VERSION) && \
 	cp ../Makefiles/SDL_gfx.Makefile Makefile
 	@$(MAKE) -C $(SDL_GFX_VERSION)
+	
+$(SDL_NET): $(SDL_NET_SRC)
+	@[ -d $(SDL_NET_VERSION) ] || tar -xzf $<
+	@cd $(SDL_NET_VERSION) && \
+	cp ../Makefiles/SDL_net.Makefile Makefile
+	@$(MAKE) -C $(SDL_NET_VERSION)
 
 install:
 	@[ ! -d $(SDL_VERSION) ] || $(MAKE) -C $(SDL_VERSION) install
@@ -97,9 +108,11 @@ install:
 	@[ ! -d $(SDL_IMAGE_VERSION) ] || $(MAKE) -C $(SDL_IMAGE_VERSION) install
 	@[ ! -d $(SDL_MIXER_VERSION) ] || $(MAKE) -C $(SDL_MIXER_VERSION) install
 	@[ ! -d $(SDL_GFX_VERSION) ] || $(MAKE) -C $(SDL_GFX_VERSION) install
+	@[ ! -d $(SDL_NET_VERSION) ] || $(MAKE) -C $(SDL_NET_VERSION) install
 
 clean:
 	@$(RM) -r $(SDL_TTF_VERSION)
 	@$(RM) -r $(SDL_IMAGE_VERSION)
 	@$(RM) -r $(SDL_MIXER_VERSION)
 	@$(RM) -r $(SDL_GFX_VERSION)
+	@$(RM) -r $(SDL_NET_VERSION)
